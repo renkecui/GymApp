@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.Streaks
+import com.example.gymapp.Components.TodayWorkoutCard
 import com.example.gymapp.R
 import com.example.gymapp.data.eDayOfWeek
 import java.util.Locale
@@ -32,6 +32,9 @@ fun HomeScreen(
 ) {
     val streak: Int = 186
     val dayOfWeek: eDayOfWeek = eDayOfWeek.MONDAY
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,9 +65,15 @@ fun HomeScreen(
             style = MaterialTheme.typography.labelLarge,
             maxLines = 1
         )
-        Text(text = "Streak", style = MaterialTheme.typography.bodyLarge)
         Streaks(streak, dayOfWeek)
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(text = "Today's Workout", style = MaterialTheme.typography.bodyLarge)
+        TodayWorkoutCard(
+            onClick = {}
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
         Text(text = "My Week", style = MaterialTheme.typography.bodyLarge)
     }
 }
