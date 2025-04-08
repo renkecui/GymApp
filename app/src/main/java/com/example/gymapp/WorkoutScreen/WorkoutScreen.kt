@@ -1,5 +1,7 @@
 package com.example.gymapp.WorkoutScreen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,19 +20,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.WeekView
-import com.example.gymapp.HomeScreen.HomeScreen
 import com.example.gymapp.data.eDayOfWeek
+import java.time.LocalDate
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WorkoutScreen(
     navController: NavHostController,
-    highlightedDay: eDayOfWeek
+    currentDay: LocalDate
 ) {
+    val highlightedDay = currentDay.dayOfWeek
+
 //    val listWorkout
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -60,11 +64,12 @@ fun WorkoutScreen(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun WorkoutScreenPreview() {
     // Provide a fake navController for preview
-    val highlightedDay = eDayOfWeek.MONDAY
+    val highlightedDay = LocalDate.now()
 
     WorkoutScreen(navController = rememberNavController(), highlightedDay)
 }

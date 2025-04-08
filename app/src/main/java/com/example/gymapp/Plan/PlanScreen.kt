@@ -1,11 +1,10 @@
 package com.example.gymapp.Plan
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,8 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,21 +26,39 @@ import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.WeekView
 import com.example.gymapp.data.eDayOfWeek
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
-import androidx.compose.ui.text.font.FontWeight
+import com.example.gymapp.Components.ExerciseCategories
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlanScreen(
     navController: NavHostController,
-    highlightedDay: eDayOfWeek
+    currentDay: LocalDate
 ) {
-    val exercises = listOf("Abs", "Back", "Biceps", "Legs", "Cardio", "Chest", "Triceps")
+    val highlightedDay = currentDay.dayOfWeek
+    val exerciseCategories = listOf(
+        "Abs",
+        "Back",
+        "Biceps",
+        "Triceps",
+        "Chest",
+        "Shoulders",
+        "Legs",
+        "Glutes",
+        "Cardio",
+        "Core",
+        "Full Body",
+        "Arms",
+        "Calves",
+        "Forearms",
+        "Neck",
+        "Mobility",
+        "Balance",
+        "Stretching"
+    )
     var selectedExercises by remember { mutableStateOf(setOf<String>()) }
 //    val dateToday = DateTime.now
 
@@ -58,9 +73,11 @@ fun PlanScreen(
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("Planner", style = MaterialTheme.typography.titleLarge)
-                // TODO Implement dynamic day tracking
-                // Show today's date?
-                Text("Week _ - _", fontSize = 14.sp)
+                // Show Today's Date
+                val currentDate = LocalDate.now()
+                val formatter = DateTimeFormatter.ofPattern("MMM dd")
+                val formattedDate = currentDate.format(formatter)
+                Text(text = formattedDate, fontSize = 14.sp)
             }
             Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next")
         }
@@ -73,45 +90,18 @@ fun PlanScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Exercise buttons in a 2-column grid
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(bottom = 100.dp)
-        ) {
-            items(exercises) { exercise ->
-                val isSelected = selectedExercises.contains(exercise)
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(if (isSelected) Color(0xFFFFF176) else Color.LightGray)
-                        .clickable {
-                            selectedExercises = selectedExercises.toMutableSet().apply {
-                                if (contains(exercise)) remove(exercise) else add(exercise)
-                            }
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = exercise,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-                    )
-                }
-            }
-        }
+        ExerciseCategories(exerciseCategories)
     }
 }
 
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun PlanScreenPreview() {
     // Provide a fake navController for preview
-    val highlightedDay = eDayOfWeek.MONDAY
+    val highlightedDay = LocalDate.now()
+
 
     PlanScreen(navController = rememberNavController(), highlightedDay)
 }

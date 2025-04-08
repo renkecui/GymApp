@@ -1,6 +1,7 @@
 package com.example.gymapp.Components
 
-import androidx.compose.foundation.layout.Arrangement
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -21,10 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.gymapp.data.eDayOfWeek
+import java.time.DayOfWeek
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Streaks(count: Int, highlightedDay: eDayOfWeek) {
+fun Streaks(count: Int, highlightedDay: DayOfWeek) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,25 +71,27 @@ fun Streaks(count: Int, highlightedDay: eDayOfWeek) {
 
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun StreaksPreviewM5() {
     val count: Int = 5
-    val dayOfWeek: eDayOfWeek = eDayOfWeek.MONDAY
+    val dayOfWeek = DayOfWeek.MONDAY
     Streaks(count, dayOfWeek)
 }
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun StreaksPreviewT12() {
     val count: Int = 12
-    val dayOfWeek: eDayOfWeek = eDayOfWeek.TUESDAY
+    val dayOfWeek = DayOfWeek.TUESDAY
     Streaks(count, dayOfWeek)
 }
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun StreaksPreviewS182() {
     val count: Int = 182
-    val dayOfWeek: eDayOfWeek = eDayOfWeek.SATURDAY
+    val dayOfWeek = DayOfWeek.SATURDAY
     Streaks(count, dayOfWeek)
 }

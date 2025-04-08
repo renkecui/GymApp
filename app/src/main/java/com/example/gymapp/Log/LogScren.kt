@@ -2,9 +2,9 @@ package com.example.gymapp.Log
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.gymapp.data.eDayOfWeek
+import java.time.LocalDate
 
 
 @Composable
-fun LogScreen(navController: NavHostController, highlightedDay: eDayOfWeek) {
+fun LogScreen(navController: NavHostController, highlightedDay: LocalDate) {
 }

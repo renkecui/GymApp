@@ -1,5 +1,7 @@
 package com.example.gymapp
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.MaterialTheme
@@ -17,13 +19,18 @@ import com.example.gymapp.HomeScreen.HomeScreen
 import com.example.gymapp.Log.LogScreen
 import com.example.gymapp.Plan.PlanScreen
 import com.example.gymapp.WorkoutScreen.WorkoutScreen
-import com.example.gymapp.data.eDayOfWeek
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun GymApp() {
     val navController = rememberNavController()
     val selectedTab = remember { mutableStateOf("home") }
-    val highlightedDay = eDayOfWeek.MONDAY
+    val currentDate = LocalDate.now()
+//    val formatter = DateTimeFormatter.ofPattern("MMM dd")
+//    val formattedDate = currentDate.format(formatter)
+//    val dayOfW = currentDate.dayOfWeek
+
 
     Scaffold(
         bottomBar = {
@@ -52,15 +59,16 @@ fun GymApp() {
             startDestination = "home",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { HomeScreen(navController, highlightedDay) }
-            composable("plan") { PlanScreen(navController, highlightedDay) }
-            composable("workout") { WorkoutScreen(navController, highlightedDay) }
-            composable("log") { LogScreen(navController, highlightedDay) }
+            composable("home") { HomeScreen(navController, currentDate) }
+            composable("plan") { PlanScreen(navController, currentDate) }
+            composable("workout") { WorkoutScreen(navController, currentDate) }
+            composable("log") { LogScreen(navController, currentDate) }
         }
     }
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun GymAppPreview() {
