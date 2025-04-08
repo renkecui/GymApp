@@ -29,7 +29,8 @@ import java.util.Locale
 
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    highlightedDay: eDayOfWeek
 ) {
     val streak: Int = 186
     val dayOfWeek: eDayOfWeek = eDayOfWeek.MONDAY
@@ -84,5 +85,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     // Provide a fake navController for preview
-    HomeScreen(navController = rememberNavController())
+    val highlightedDay = eDayOfWeek.MONDAY
+
+    HomeScreen(navController = rememberNavController(), highlightedDay)
 }

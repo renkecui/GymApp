@@ -7,5 +7,6 @@ enum class eDayOfWeek(val shortName: String) {
     WEDNESDAY("W"),
     THURSDAY("TH"),
     FRIDAY("F"),
-    SATURDAY("S")
+    SATURDAY("S"),
+    NULL("")
 }
