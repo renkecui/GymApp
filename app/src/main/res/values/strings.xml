@@ -9,7 +9,21 @@
     <string name="home_profile">Profile</string>
 
     <!-- Home  -->
-    <string name="Week_Number">Week 1</string>
+    <string name="week_Number">Week 1</string>
+
+    <!-- Planner  -->
+    <string name="planner_title">Log</string>
+
+
+    <!-- Workout  -->
+    <string name="workout_title">Log</string>
+
+
+    <!-- Log  -->
+    <string name="log_title">Log</string>
+
+
+
 
 
 </resources>

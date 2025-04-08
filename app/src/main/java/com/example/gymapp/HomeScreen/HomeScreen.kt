@@ -67,7 +67,7 @@ fun HomeScreen(
         // Placeholder
         Text(
             // need to change the week number string to be dynamic
-            text = stringResource(R.string.Week_Number).uppercase(Locale.ENGLISH),
+            text = stringResource(R.string.week_Number).uppercase(Locale.ENGLISH),
             color = Color.Black,
             style = MaterialTheme.typography.labelLarge,
             maxLines = 1
