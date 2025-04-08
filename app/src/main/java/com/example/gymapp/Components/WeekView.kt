@@ -1,5 +1,7 @@
 package com.example.gymapp.Components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -21,11 +23,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.layout.*
-import androidx.compose.foundation.layout.* // This gives you Row, Column, etc.
+import java.time.DayOfWeek
+import java.time.format.TextStyle
+import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun WeekView(highlightedDay: eDayOfWeek, modifier: Modifier = Modifier) {
+fun WeekView(highlightedDay: DayOfWeek, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .padding(4.dp),
@@ -39,7 +43,8 @@ fun WeekView(highlightedDay: eDayOfWeek, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            eDayOfWeek.entries.forEach { day ->
+            DayOfWeek.entries.forEach { day ->
+                val shortName = day.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -50,7 +55,7 @@ fun WeekView(highlightedDay: eDayOfWeek, modifier: Modifier = Modifier) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = day.shortName,
+                        text = shortName,
                         color = Color.Black,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium
@@ -63,10 +68,11 @@ fun WeekView(highlightedDay: eDayOfWeek, modifier: Modifier = Modifier) {
 
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun WeekViewPreviewT() {
-    val dayOfWeek: eDayOfWeek = eDayOfWeek.TUESDAY
+    val dayOfWeek = DayOfWeek.TUESDAY
 
     Row(modifier = Modifier.fillMaxWidth()) {
         WeekView(

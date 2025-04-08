@@ -19,6 +19,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.automirrored.filled.DirectionsRun
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun BottomNavBar(selectedItem: String, onItemSelected: (String) -> Unit) {
@@ -26,8 +29,9 @@ fun BottomNavBar(selectedItem: String, onItemSelected: (String) -> Unit) {
 
     NavigationBar {
         items.forEach { item ->
+            val isSelected = selectedItem == item
             NavigationBarItem(
-                selected = selectedItem == item,
+                selected = isSelected,
                 onClick = { onItemSelected(item) },
                 icon = {
                     when (item) {
@@ -37,10 +41,23 @@ fun BottomNavBar(selectedItem: String, onItemSelected: (String) -> Unit) {
                         "log" -> Icon(Icons.Default.CalendarToday, contentDescription = "Log")
                     }
                 },
-                label = { Text(item.replaceFirstChar { it.uppercaseChar() }) } // Show label as "Home", etc.
+                label = {
+                    Text(
+                        text = item.replaceFirstChar { it.uppercaseChar() },
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = .2f)
+                )
             )
         }
     }
+
 }
 
 @Preview(showBackground = true)
@@ -49,7 +66,7 @@ fun PreviewBottomNavBarHome() {
     Scaffold(
         bottomBar = {
             BottomNavBar(
-                selectedItem = "Home",
+                selectedItem = "home",
                 onItemSelected = {}
             )
         }
@@ -65,7 +82,7 @@ fun PreviewBottomNavBarWorkout() {
     Scaffold(
         bottomBar = {
             BottomNavBar(
-                selectedItem = "Workout",
+                selectedItem = "workout",
                 onItemSelected = {}
             )
         }

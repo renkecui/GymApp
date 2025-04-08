@@ -1,5 +1,7 @@
 package com.example.gymapp.HomeScreen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,15 +27,18 @@ import com.example.gymapp.Components.Streaks
 import com.example.gymapp.Components.TodayWorkoutCard
 import com.example.gymapp.R
 import com.example.gymapp.data.eDayOfWeek
+import java.time.DayOfWeek
+import java.time.LocalDate
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
     navController: NavController,
-    highlightedDay: eDayOfWeek
+    currentDay: LocalDate
 ) {
     val streak: Int = 186
-    val dayOfWeek: eDayOfWeek = eDayOfWeek.MONDAY
+    val highlightedDay = currentDay.dayOfWeek
 
 
 
@@ -67,7 +72,7 @@ fun HomeScreen(
             style = MaterialTheme.typography.labelLarge,
             maxLines = 1
         )
-        Streaks(streak, dayOfWeek)
+        Streaks(streak, highlightedDay)
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Today's Workout", style = MaterialTheme.typography.bodyLarge)
@@ -81,11 +86,13 @@ fun HomeScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
     // Provide a fake navController for preview
-    val highlightedDay = eDayOfWeek.MONDAY
+    val highlightedDay  = LocalDate.now()
+
 
     HomeScreen(navController = rememberNavController(), highlightedDay)
 }
