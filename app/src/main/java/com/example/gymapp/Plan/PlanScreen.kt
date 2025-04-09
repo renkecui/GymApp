@@ -39,12 +39,12 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun PlanScreen(
     navController: NavHostController,
-    currentDay: LocalDate,
     viewModel: ExerciseViewModel
 ) {
     val exerciseCategories by viewModel.categories.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
+    val currentDay by viewModel.currentDay.collectAsState()
     val highlightedDay = currentDay.dayOfWeek
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -90,7 +90,6 @@ private fun PlanScreenPreview() {
 
     PlanScreen(
         navController = rememberNavController(),
-        currentDay = highlightedDay,
         viewModel = fakeViewModel
     )
 }

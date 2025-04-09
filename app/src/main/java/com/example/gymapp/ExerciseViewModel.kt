@@ -1,5 +1,6 @@
 package com.example.gymapp
 
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gymapp.data.ApiKey
@@ -9,6 +10,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import android.util.Log
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
 
 
 open class ExerciseViewModel : ViewModel() {
@@ -28,6 +31,21 @@ open class ExerciseViewModel : ViewModel() {
 
     private val _bodyPartExercises = MutableStateFlow<List<ExerciseDbItem>>(emptyList())
     val bodyPartExercises: StateFlow<List<ExerciseDbItem>> = _bodyPartExercises
+
+    private val _getTodayWorkout = MutableStateFlow<List<ExerciseDbItem>>(emptyList())
+    val dayWorkoutList: StateFlow<List<ExerciseDbItem>> = _getTodayWorkout
+
+    // Track Today's Date
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val _currentDay = MutableStateFlow(LocalDate.now())
+    @RequiresApi(Build.VERSION_CODES.O)
+    val currentDay: StateFlow<LocalDate> = _currentDay
+
+    // Track the day being viewed
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val _dayDate =MutableStateFlow(LocalDate.now())
+    @RequiresApi(Build.VERSION_CODES.O)
+    val dayDate: StateFlow<LocalDate> = _dayDate
 
 
     private val api = RetrofitInstance.api // You’ll create this in Step 3
@@ -80,5 +98,11 @@ open class ExerciseViewModel : ViewModel() {
                 _isLoading.value = false
             }
         }
+    }
+
+    fun getDayWorkoutList() {
+//        _getTodayWorkout.value =
+
+//
     }
 }

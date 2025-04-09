@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,9 +26,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.PreviewWeeklyPlanCard
 import com.example.gymapp.Components.Streaks
-import com.example.gymapp.Components.TodayWorkoutCard
+import com.example.gymapp.Components.TodayWorkoutSummaryCard
+import com.example.gymapp.ExerciseViewModel
 import com.example.gymapp.R
-import java.time.DayOfWeek
+import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.LocalDate
 import java.util.Locale
 
@@ -34,9 +37,11 @@ import java.util.Locale
 @Composable
 fun HomeScreen(
     navController: NavController,
-    currentDay: LocalDate
+    viewModel: ExerciseViewModel
 ) {
+
     val streak: Int = 186
+    val currentDay by viewModel.currentDay.collectAsState()
     val highlightedDay = currentDay.dayOfWeek
 
 
@@ -75,9 +80,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Today's Workout", style = MaterialTheme.typography.bodyLarge)
-        TodayWorkoutCard(
-            onClick = {}
-        )
+        TodayWorkoutSummaryCard()
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "My Week", style = MaterialTheme.typography.bodyLarge)
@@ -93,5 +96,5 @@ private fun HomeScreenPreview() {
     val highlightedDay  = LocalDate.now()
 
 
-    HomeScreen(navController = rememberNavController(), highlightedDay)
+    HomeScreen(navController = rememberNavController(), viewModel = FakeExerciseViewModel())
 }

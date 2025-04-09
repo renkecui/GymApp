@@ -36,7 +36,6 @@ fun ExerciseCategories(
     navController: NavHostController
 ) {
     viewModel.getBodyPartCategory()
-    var selectedBodyPart by remember { mutableStateOf<String?>(null) }
 
     Spacer(modifier = Modifier.height(8.dp))
     Box(

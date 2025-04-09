@@ -16,13 +16,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.gymapp.Components.TodayWorkout
 import com.example.gymapp.Components.WeekView
+import com.example.gymapp.ExerciseViewModel
+import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.LocalDate
 
 
@@ -30,11 +35,10 @@ import java.time.LocalDate
 @Composable
 fun WorkoutScreen(
     navController: NavHostController,
-    currentDay: LocalDate
+    viewModel: ExerciseViewModel
 ) {
+    val currentDay by viewModel.currentDay.collectAsState()
     val highlightedDay = currentDay.dayOfWeek
-
-//    val listWorkout
 
     Column(modifier = Modifier.padding(16.dp)) {
 
@@ -59,6 +63,7 @@ fun WorkoutScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        TodayWorkout(viewModel)
     }
 }
 
@@ -68,7 +73,7 @@ fun WorkoutScreen(
 @Composable
 private fun WorkoutScreenPreview() {
     // Provide a fake navController for preview
-    val highlightedDay = LocalDate.now()
+    val viewModel = FakeExerciseViewModel()
 
-    WorkoutScreen(navController = rememberNavController(), highlightedDay)
+    WorkoutScreen(navController = rememberNavController(), viewModel)
 }

@@ -1,6 +1,5 @@
 package com.example.gymapp
 
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
@@ -22,17 +21,15 @@ import com.example.gymapp.HomeScreen.HomeScreen
 import com.example.gymapp.Log.LogScreen
 import com.example.gymapp.Plan.PlanScreen
 import com.example.gymapp.WorkoutScreen.WorkoutScreen
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun GymApp() {
     val navController = rememberNavController()
     val selectedTab = remember { mutableStateOf("home") }
-    val currentDate = LocalDate.now()
     val viewModel: ExerciseViewModel = viewModel()
 
-        Scaffold(
+    Scaffold(
         bottomBar = {
             BottomAppBar(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -59,10 +56,10 @@ fun GymApp() {
             startDestination = "home",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { HomeScreen(navController, currentDate) }
-            composable("plan") { PlanScreen(navController, currentDate, viewModel) }
-            composable("workout") { WorkoutScreen(navController, currentDate) }
-            composable("log") { LogScreen(navController, currentDate) }
+            composable("home") { HomeScreen(navController, viewModel) }
+            composable("plan") { PlanScreen(navController, viewModel) }
+            composable("workout") { WorkoutScreen(navController, viewModel) }
+            composable("log") { LogScreen(navController, viewModel) }
 
 
             // nested route example
