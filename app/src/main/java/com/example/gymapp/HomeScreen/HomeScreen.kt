@@ -26,7 +26,6 @@ import com.example.gymapp.Components.PreviewWeeklyPlanCard
 import com.example.gymapp.Components.Streaks
 import com.example.gymapp.Components.TodayWorkoutCard
 import com.example.gymapp.R
-import com.example.gymapp.data.eDayOfWeek
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.util.Locale

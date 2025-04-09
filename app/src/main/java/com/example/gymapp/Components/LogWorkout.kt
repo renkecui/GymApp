@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.WeekView
-import com.example.gymapp.data.eDayOfWeek
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.*
 import com.example.gymapp.Components.ExerciseCategories

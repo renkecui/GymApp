@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.WeekView
-import com.example.gymapp.data.eDayOfWeek
 import java.time.LocalDate
 
 

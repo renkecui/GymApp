@@ -22,45 +22,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.WeekView
-import com.example.gymapp.data.eDayOfWeek
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.gymapp.Components.BodyPartExerciseList
 import com.example.gymapp.Components.ExerciseCategories
+import com.example.gymapp.ExerciseViewModel
+import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlanScreen(
     navController: NavHostController,
-    currentDay: LocalDate
+    currentDay: LocalDate,
+    viewModel: ExerciseViewModel
 ) {
+    val exerciseCategories by viewModel.categories.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
     val highlightedDay = currentDay.dayOfWeek
-    val exerciseCategories = listOf(
-        "Abs",
-        "Back",
-        "Biceps",
-        "Triceps",
-        "Chest",
-        "Shoulders",
-        "Legs",
-        "Glutes",
-        "Cardio",
-        "Core",
-        "Full Body",
-        "Arms",
-        "Calves",
-        "Forearms",
-        "Neck",
-        "Mobility",
-        "Balance",
-        "Stretching"
-    )
-    var selectedExercises by remember { mutableStateOf(setOf<String>()) }
-//    val dateToday = DateTime.now
 
     Column(modifier = Modifier.padding(16.dp)) {
 
@@ -72,11 +57,9 @@ fun PlanScreen(
         ) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Planner", style = MaterialTheme.typography.titleLarge)
-                // Show Today's Date
-                val currentDate = LocalDate.now()
                 val formatter = DateTimeFormatter.ofPattern("MMM dd")
-                val formattedDate = currentDate.format(formatter)
+                val formattedDate = currentDay.format(formatter)
+                Text("Planner", style = MaterialTheme.typography.titleLarge)
                 Text(text = formattedDate, fontSize = 14.sp)
             }
             Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next")
@@ -88,20 +71,26 @@ fun PlanScreen(
             WeekView(highlightedDay = highlightedDay, modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        ExerciseCategories(exerciseCategories)
+        ExerciseCategories(
+            exerciseDbList = exerciseCategories,
+            viewModel = viewModel,
+            navController = navController
+        )
     }
 }
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun PlanScreenPreview() {
-    // Provide a fake navController for preview
     val highlightedDay = LocalDate.now()
+    val fakeViewModel = remember { FakeExerciseViewModel() }
 
-
-    PlanScreen(navController = rememberNavController(), highlightedDay)
+    PlanScreen(
+        navController = rememberNavController(),
+        currentDay = highlightedDay,
+        viewModel = fakeViewModel
+    )
 }

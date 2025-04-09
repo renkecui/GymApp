@@ -1,5 +1,6 @@
 package com.example.gymapp
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
@@ -11,9 +12,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.gymapp.Components.BodyPartExerciseList
 import com.example.gymapp.Components.BottomNavBar
 import com.example.gymapp.HomeScreen.HomeScreen
 import com.example.gymapp.Log.LogScreen
@@ -27,12 +30,9 @@ fun GymApp() {
     val navController = rememberNavController()
     val selectedTab = remember { mutableStateOf("home") }
     val currentDate = LocalDate.now()
-//    val formatter = DateTimeFormatter.ofPattern("MMM dd")
-//    val formattedDate = currentDate.format(formatter)
-//    val dayOfW = currentDate.dayOfWeek
+    val viewModel: ExerciseViewModel = viewModel()
 
-
-    Scaffold(
+        Scaffold(
         bottomBar = {
             BottomAppBar(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -60,9 +60,16 @@ fun GymApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable("home") { HomeScreen(navController, currentDate) }
-            composable("plan") { PlanScreen(navController, currentDate) }
+            composable("plan") { PlanScreen(navController, currentDate, viewModel) }
             composable("workout") { WorkoutScreen(navController, currentDate) }
             composable("log") { LogScreen(navController, currentDate) }
+
+
+            // nested route example
+            composable("plan/{part}") { backStackEntry ->
+                val part = backStackEntry.arguments?.getString("part") ?: ""
+                BodyPartExerciseList(bodyPart = part, viewModel = viewModel())
+            }
         }
     }
 }
