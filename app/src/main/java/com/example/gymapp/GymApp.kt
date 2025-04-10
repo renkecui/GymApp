@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -27,6 +28,7 @@ import com.example.gymapp.WorkoutScreen.WorkoutScreen
 fun GymApp() {
     val navController = rememberNavController()
     val selectedTab = remember { mutableStateOf("home") }
+    val context = LocalContext.current
     val viewModel: ExerciseViewModel = viewModel()
 
     Scaffold(
@@ -65,7 +67,11 @@ fun GymApp() {
             // nested route example
             composable("plan/{part}") { backStackEntry ->
                 val part = backStackEntry.arguments?.getString("part") ?: ""
-                BodyPartExerciseList(bodyPart = part, viewModel = viewModel())
+                BodyPartExerciseList(
+                    bodyPart = part,
+                    viewModel = viewModel,
+                    navController = navController
+                )
             }
         }
     }

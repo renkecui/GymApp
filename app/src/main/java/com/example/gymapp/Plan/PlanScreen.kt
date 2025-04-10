@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -34,6 +35,8 @@ import com.example.gymapp.ExerciseViewModel
 import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.DayOfWeek
+
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -45,7 +48,9 @@ fun PlanScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
     val currentDay by viewModel.currentDay.collectAsState()
-    val highlightedDay = currentDay.dayOfWeek
+    val dayDate by viewModel.dayDate.collectAsState()
+    val highlightedDay = dayDate.dayOfWeek
+    val formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d")
 
     Column(modifier = Modifier.padding(16.dp)) {
 
@@ -55,20 +60,32 @@ fun PlanScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                val formatter = DateTimeFormatter.ofPattern("MMM dd")
-                val formattedDate = currentDay.format(formatter)
-                Text("Planner", style = MaterialTheme.typography.titleLarge)
-                Text(text = formattedDate, fontSize = 14.sp)
+            IconButton(onClick = { 
+                viewModel.moveByWeek(forward = false)
+            }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous Week")
             }
-            Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next")
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Planner", style = MaterialTheme.typography.titleLarge)
+                Text(text = dayDate.format(formatter), fontSize = 14.sp)
+            }
+            IconButton(onClick = { 
+                viewModel.moveByWeek(forward = true)
+            }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next Week")
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            WeekView(highlightedDay = highlightedDay, modifier = Modifier.weight(1f))
+            WeekView(
+                highlightedDay = highlightedDay, 
+                modifier = Modifier.weight(1f),
+                onDayClick = { dayOfWeek ->
+                    viewModel.selectDayOfWeek(dayOfWeek)
+                }
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))

@@ -1,6 +1,8 @@
 package com.example.gymapp.Components
 
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.clickable
@@ -82,6 +84,7 @@ fun ExerciseCategories(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun PreviewExerciseCategories() {

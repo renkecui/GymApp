@@ -13,15 +13,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.Components.TodayWorkout
@@ -29,6 +32,8 @@ import com.example.gymapp.Components.WeekView
 import com.example.gymapp.ExerciseViewModel
 import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.DayOfWeek
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -38,42 +43,62 @@ fun WorkoutScreen(
     viewModel: ExerciseViewModel
 ) {
     val currentDay by viewModel.currentDay.collectAsState()
-    val highlightedDay = currentDay.dayOfWeek
+    val dayDate by viewModel.dayDate.collectAsState()
+    val highlightedDay = dayDate.dayOfWeek
+    val formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d")
+    
+    // Set the current day when the screen is opened
+    LaunchedEffect(Unit) {
+        viewModel.setDayDate(LocalDate.now())
+    }
 
     Column(modifier = Modifier.padding(16.dp)) {
-
         // Header row
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("My Week", style = MaterialTheme.typography.titleLarge)
+            IconButton(onClick = { 
+                viewModel.moveByWeek(forward = false)
+            }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous Week")
             }
-            Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next")
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("MY WEEK OF WORKOUTS", style = MaterialTheme.typography.titleLarge)
+                Text(text = dayDate.format(formatter), fontSize = 14.sp)
+            }
+            IconButton(onClick = { 
+                viewModel.moveByWeek(forward = true)
+            }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next Week")
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(modifier = Modifier.fillMaxWidth()) {
-            WeekView(highlightedDay = highlightedDay, modifier = Modifier.weight(1f))
+            WeekView(
+                highlightedDay = highlightedDay, 
+                modifier = Modifier.weight(1f),
+                onDayClick = { dayOfWeek ->
+                    viewModel.selectDayOfWeek(dayOfWeek)
+                }
+            )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        TodayWorkout(viewModel)
+        TodayWorkout(viewModel = viewModel)
     }
 }
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun WorkoutScreenPreview() {
-    // Provide a fake navController for preview
-    val viewModel = FakeExerciseViewModel()
-
-    WorkoutScreen(navController = rememberNavController(), viewModel)
+    WorkoutScreen(
+        navController = rememberNavController(),
+        viewModel = FakeExerciseViewModel()
+    )
 }
