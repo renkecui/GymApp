@@ -3,6 +3,7 @@ package com.example.gymapp.Components
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -28,7 +29,11 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun WeekView(highlightedDay: DayOfWeek, modifier: Modifier = Modifier) {
+fun WeekView(
+    highlightedDay: DayOfWeek, 
+    modifier: Modifier = Modifier,
+    onDayClick: (DayOfWeek) -> Unit = {}
+) {
     Card(
         modifier = modifier
             .padding(4.dp),
@@ -43,18 +48,18 @@ fun WeekView(highlightedDay: DayOfWeek, modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             DayOfWeek.entries.forEach { day ->
-                val shortName = day.getDisplayName(TextStyle.SHORT, Locale.getDefault())
                 Box(
                     modifier = Modifier
                         .size(36.dp)
                         .background(
                             color = if (day == highlightedDay) Color.Yellow else Color.Transparent,
                             shape = CircleShape
-                        ),
+                        )
+                        .clickable { onDayClick(day) },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = shortName,
+                        text = day.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
                         color = Color.Black,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium
@@ -65,8 +70,6 @@ fun WeekView(highlightedDay: DayOfWeek, modifier: Modifier = Modifier) {
     }
 }
 
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
@@ -76,7 +79,8 @@ private fun WeekViewPreviewT() {
     Row(modifier = Modifier.fillMaxWidth()) {
         WeekView(
             highlightedDay = dayOfWeek,
-            modifier = Modifier.weight(1f) // Now valid!
+            modifier = Modifier.weight(1f),
+            onDayClick = {}
         )
     }
 }

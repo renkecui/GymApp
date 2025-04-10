@@ -1,6 +1,8 @@
 package com.example.gymapp.Components
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.example.gymapp.ExerciseViewModel
@@ -22,33 +24,51 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import com.example.gymapp.testing.FakeExerciseViewModel
 import com.example.gymapp.data.ExerciseDbItem
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import java.time.LocalDate
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BodyPartExerciseList(
     bodyPart: String,
-    viewModel: ExerciseViewModel
+    viewModel: ExerciseViewModel,
+    navController: NavHostController
 ) {
-    var selectedExercises by remember { mutableStateOf(setOf<ExerciseDbItem>()) }
+    val currentDate by viewModel.dayDate.collectAsState()
+    
+    // Get the list of exercises for the current day
+    viewModel.getDayWorkoutList()
+    val selectedExercisesForDay by viewModel.selectedExercises.collectAsState()
+    
     Log.d("BodyPartExerciseList", "list to get: $bodyPart")
-//    val bodyPartExerciseList = viewModel.getBodyPartExercises(bodyPart)
     viewModel.getBodyPartExercises(bodyPart)
     val bodyPartExerciseList by viewModel.bodyPartExercises.collectAsState()
 
     Log.d("BodyPartExerciseList", "list of exercises: $bodyPartExerciseList")
 
-
     Column(modifier = Modifier.padding(16.dp)) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = { navController.navigateUp() }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back to Categories"
+                )
+            }
             Text(
                 text = bodyPart.replaceFirstChar { it.uppercase() },
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
+            // Empty box for symmetry
+            Box(modifier = Modifier.size(48.dp))
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -63,11 +83,14 @@ fun BodyPartExerciseList(
             items(bodyPartExerciseList) { exercise ->
                 ExerciseItemCard(
                     exercise = exercise,
-                    isSelected = selectedExercises.contains(exercise),
+                    isSelected = selectedExercisesForDay.any { it.id == exercise.id },
                     onToggleSelect = { clickedExercise ->
-                        selectedExercises = selectedExercises.toMutableSet().apply {
-                            if (contains(clickedExercise)) remove(clickedExercise)
-                            else add(clickedExercise)
+                        if (selectedExercisesForDay.any { it.id == clickedExercise.id }) {
+                            // Remove from database
+                            viewModel.removeSelectedExercise(clickedExercise, currentDate)
+                        } else {
+                            // Save to database
+                            viewModel.saveSelectedExercise(clickedExercise, currentDate)
                         }
                     }
                 )
@@ -76,16 +99,13 @@ fun BodyPartExerciseList(
     }
 }
 
-
-
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-fun PreviewBodyPartExerciseList() {
-    val fakeViewModel = remember { FakeExerciseViewModel() }
-
+fun BodyPartExerciseListPreview() {
     BodyPartExerciseList(
-        bodyPart = "Abs",
-        viewModel = fakeViewModel
+        bodyPart = "back",
+        viewModel = FakeExerciseViewModel(),
+        navController = rememberNavController()
     )
 }
