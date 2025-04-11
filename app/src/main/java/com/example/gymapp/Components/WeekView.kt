@@ -2,42 +2,35 @@ package com.example.gymapp.Components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.ui.tooling.preview.Preview
 import java.time.DayOfWeek
 import java.time.format.TextStyle
-import java.util.Locale
+import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeekView(
-    highlightedDay: DayOfWeek, 
+    highlightedDay: DayOfWeek,
     modifier: Modifier = Modifier,
     onDayClick: (DayOfWeek) -> Unit = {}
 ) {
     Card(
-        modifier = modifier
-            .padding(4.dp),
-        shape = RoundedCornerShape(12.dp),
+        modifier = modifier.padding(4.dp),
+        shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -48,21 +41,31 @@ fun WeekView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             DayOfWeek.entries.forEach { day ->
+                val isSelected = day == highlightedDay
+
+                val backgroundColor by animateColorAsState(
+                    targetValue = if (isSelected) Color(0xFFB0C4DE) else Color.Transparent,
+                    label = "DayBackground"
+                )
+
+                val textColor = if (isSelected) Color.Black else Color.Black
+                val fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+
                 Box(
                     modifier = Modifier
-                        .size(36.dp)
+                        .clickable { onDayClick(day) }
                         .background(
-                            color = if (day == highlightedDay) Color.Yellow else Color.Transparent,
-                            shape = CircleShape
+                            color = backgroundColor,
+                            shape = RoundedCornerShape(10.dp)
                         )
-                        .clickable { onDayClick(day) },
+                        .padding(horizontal = 10.dp, vertical = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = day.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
-                        color = Color.Black,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium
+                        color = textColor,
+                        fontSize = 12.sp,
+                        fontWeight = fontWeight
                     )
                 }
             }
@@ -70,17 +73,13 @@ fun WeekView(
     }
 }
 
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-private fun WeekViewPreviewT() {
-    val dayOfWeek = DayOfWeek.TUESDAY
-
-    Row(modifier = Modifier.fillMaxWidth()) {
-        WeekView(
-            highlightedDay = dayOfWeek,
-            modifier = Modifier.weight(1f),
-            onDayClick = {}
-        )
-    }
+fun WeekViewPreview() {
+    WeekView(
+        highlightedDay = DayOfWeek.WEDNESDAY,
+        onDayClick = {}
+    )
 }
