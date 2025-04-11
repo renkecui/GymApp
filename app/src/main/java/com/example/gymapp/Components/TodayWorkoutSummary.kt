@@ -33,8 +33,13 @@ fun TodayWorkoutSummaryCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+
+        shape = RoundedCornerShape(16.dp),
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor =  Color(0xFFB0C4DE)
+        )
     ) {
         Row(
             modifier = Modifier
@@ -47,13 +52,15 @@ fun TodayWorkoutSummaryCard() {
                 Icon(
                     imageVector = Icons.Default.FitnessCenter,
                     contentDescription = "Dumbbell",
-                    modifier = Modifier.size(32.dp)
-                )
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                    )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = "Exercises",
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
                 )
             }
 

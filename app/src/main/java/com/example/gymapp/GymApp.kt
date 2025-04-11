@@ -34,8 +34,8 @@ fun GymApp() {
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.primaryContainer,
             ) {
                 BottomNavBar(
                     selectedItem = selectedTab.value,
