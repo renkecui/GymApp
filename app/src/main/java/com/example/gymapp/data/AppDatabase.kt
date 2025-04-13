@@ -6,10 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [SelectedExerciseEntity::class], version = 1, exportSchema = false)
+@Database(entities = [SelectedExerciseEntity::class, WorkoutLog::class, WorkoutNotes::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun selectedExerciseDao(): SelectedExerciseDao
+    abstract fun workoutLogDao(): WorkoutLogDao
+    abstract fun workoutNotesDao(): WorkoutNotesDao
 
     companion object {
         @Volatile
@@ -21,7 +23,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "gym_app_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration() // This will clear the database on version change
+                .build()
                 INSTANCE = instance
                 instance
             }

@@ -30,6 +30,7 @@ fun GymApp() {
     val selectedTab = remember { mutableStateOf("home") }
     val context = LocalContext.current
     val viewModel: ExerciseViewModel = viewModel()
+    viewModel.initialize(context)
 
     Scaffold(
         bottomBar = {

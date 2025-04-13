@@ -39,16 +39,19 @@ fun BodyPartExerciseList(
     navController: NavHostController
 ) {
     val currentDate by viewModel.dayDate.collectAsState()
-    
-    // Get the list of exercises for the current day
-    viewModel.getDayWorkoutList()
     val selectedExercisesForDay by viewModel.selectedExercises.collectAsState()
-    
-    Log.d("BodyPartExerciseList", "list to get: $bodyPart")
-    viewModel.getBodyPartExercises(bodyPart)
     val bodyPartExerciseList by viewModel.bodyPartExercises.collectAsState()
 
-    Log.d("BodyPartExerciseList", "list of exercises: $bodyPartExerciseList")
+    // Load the workout list and body part exercises when the composable is first displayed
+    LaunchedEffect(Unit) {
+        viewModel.getDayWorkoutList()
+        viewModel.getBodyPartExercises(bodyPart)
+    }
+
+    // Reload body part exercises when the body part changes
+    LaunchedEffect(bodyPart) {
+        viewModel.getBodyPartExercises(bodyPart)
+    }
 
     Column(modifier = Modifier.padding(16.dp)) {
         Row(

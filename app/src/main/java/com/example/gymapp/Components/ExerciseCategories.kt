@@ -38,6 +38,7 @@ fun ExerciseCategories(
     navController: NavHostController
 ) {
     viewModel.getBodyPartCategory()
+    val selectedCategories by viewModel.selectedCategories.collectAsState()
 
     Spacer(modifier = Modifier.height(8.dp))
     Box(
@@ -59,13 +60,13 @@ fun ExerciseCategories(
         contentPadding = PaddingValues(bottom = 100.dp)
     ) {
         items(exerciseDbList) { exerciseBodyPart ->
-
+            val isSelected = exerciseBodyPart != null && selectedCategories.contains(exerciseBodyPart)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color.LightGray)
+                    .background(if (isSelected) Color(0xFFA5D6A7) else Color.LightGray)
                     .clickable {
                         exerciseBodyPart?.let { bodyPart ->
                             val encodedPart = Uri.encode(bodyPart)
