@@ -38,7 +38,7 @@ fun HomeScreen(
     navController: NavController,
     viewModel: ExerciseViewModel
 ) {
-    val streak: Int = 186
+    val streak by viewModel.streak.collectAsState()
     val currentDay by viewModel.currentDay.collectAsState()
     val highlightedDay = currentDay.dayOfWeek
 
@@ -74,7 +74,6 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Week Label
-
         Streaks(streak, highlightedDay)
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -83,16 +82,14 @@ fun HomeScreen(
 
         TodayWorkoutSummaryCard()
 
-
         // Streak Label
         NewStreak(streak)
         Spacer(modifier = Modifier.height(16.dp))
 
-
         // 🦥 Sloth Level Image Based on Streak Weeks
         val slothImage = when {
-            streak < 21 -> R.drawable.level1 // 0–2 weeks
-            streak < 49 -> R.drawable.level2 // 3–6 weeks
+            streak < 21 -> R.drawable.level2 // 0–2 weeks
+            streak < 49 -> R.drawable.level1 // 3–6 weeks
             else -> R.drawable.level3        // 7+ weeks
         }
 
@@ -110,7 +107,6 @@ fun HomeScreen(
             )
         }
     }
-
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
