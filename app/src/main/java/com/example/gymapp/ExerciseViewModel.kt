@@ -67,7 +67,7 @@ open class ExerciseViewModel : ViewModel() {
     val dayDate: StateFlow<LocalDate> = _dayDate
 
     // Track exercises for specific dates
-    protected val _exercisesByDate = mutableMapOf<LocalDate, MutableList<ExerciseDbItem>>()
+    val _exercisesByDate = mutableMapOf<LocalDate, MutableList<ExerciseDbItem>>()
 
     private val api = RetrofitInstance.api
 
@@ -176,6 +176,11 @@ open class ExerciseViewModel : ViewModel() {
                     exercisesForDate.add(exercise)
                     _exercisesByDate[date] = exercisesForDate
                     
+                    // Clear any existing workout logs for this exercise on this date
+                    withContext(Dispatchers.IO) {
+                        workoutLogDao.deleteLog(date, exercise.id)
+                    }
+                    
                     // Update the UI state for the current day
                     if (date == _dayDate.value) {
                         _selectedExercises.value = exercisesForDate.toList()
@@ -183,6 +188,8 @@ open class ExerciseViewModel : ViewModel() {
                         val updatedCategories = _selectedCategories.value.toMutableSet()
                         updatedCategories.add(exercise.bodyPart)
                         _selectedCategories.value = updatedCategories
+                        // Reload workout logs to reflect the cleared logs
+                        loadWorkoutLogsForDate(date)
                     }
                 }
             } catch (e: Exception) {
@@ -234,17 +241,10 @@ open class ExerciseViewModel : ViewModel() {
                 var currentDate = today
 
                 while (true) {
-                    // Check if there's any activity for this date
-                    val hasActivity = withContext(Dispatchers.IO) {
-                        // Check for workout logs
-                        val logs = workoutLogDao.getLogsForDate(currentDate)
-                        val hasLogs = logs.first().isNotEmpty()
-                        // Check for notes
-                        val hasNotes = workoutNotesDao.getNotesForDate(currentDate)?.notes?.isNotEmpty() ?: false
-                        hasLogs || hasNotes
-                    }
+                    // Check if there are any planned exercises for this date
+                    val hasPlannedExercises = _exercisesByDate[currentDate]?.isNotEmpty() ?: false
 
-                    if (hasActivity) {
+                    if (hasPlannedExercises) {
                         currentStreak++
                         currentDate = currentDate.minusDays(1)
                     } else {

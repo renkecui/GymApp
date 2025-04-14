@@ -80,7 +80,7 @@ fun HomeScreen(
         Text(text = "Today's Workout", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.height(3.dp))
 
-        TodayWorkoutSummaryCard()
+        TodayWorkoutSummaryCard(viewModel = viewModel)
 
         // Streak Label
         NewStreak(streak)
