@@ -123,5 +123,5 @@ fun WorkoutExerciseItem(exercise: ExerciseDbItem) {
 @Preview(showBackground = true)
 @Composable
 fun TodayWorkoutPreview() {
-    TodayWorkout(viewModel = FakeExerciseViewModel())
+    TodayWorkout(viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }

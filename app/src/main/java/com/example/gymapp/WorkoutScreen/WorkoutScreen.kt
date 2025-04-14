@@ -99,6 +99,6 @@ fun WorkoutScreen(
 private fun WorkoutScreenPreview() {
     WorkoutScreen(
         navController = rememberNavController(),
-        viewModel = FakeExerciseViewModel()
+        viewModel = com.example.gymapp.testing.FakeExerciseViewModel()
     )
 }

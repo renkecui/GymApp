@@ -66,7 +66,7 @@ fun ExerciseItemCard(
 @Preview
 @Composable
 fun PreviewExerciseCardPushUp() {
-    val exampleExercise = ExampleData.backExercise
+    val exampleExercise = com.example.gymapp.testing.ExampleData.backExercise
     val isSelected = false
 
     ExerciseItemCard(exampleExercise,isSelected, onToggleSelect = {})

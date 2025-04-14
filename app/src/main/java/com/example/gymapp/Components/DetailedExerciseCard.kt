@@ -82,7 +82,7 @@ fun DetailedExerciseCard(exercise: ExerciseDbItem) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDetailedExerciseCard() {
-    val example = ExampleData.backExercise
+    val example = com.example.gymapp.testing.ExampleData.backExercise
 
     DetailedExerciseCard(example)
 }

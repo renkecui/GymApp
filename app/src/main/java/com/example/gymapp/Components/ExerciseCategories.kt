@@ -89,8 +89,8 @@ fun ExerciseCategories(
 @Preview(showBackground = true)
 @Composable
 fun PreviewExerciseCategories() {
-    val testExerciseList = ExampleData.bodyPartList
-    val fakeViewModel = remember { FakeExerciseViewModel() }
+    val testExerciseList = com.example.gymapp.testing.ExampleData.bodyPartList
+    val fakeViewModel = remember { com.example.gymapp.testing.FakeExerciseViewModel() }
 
     ExerciseCategories(testExerciseList, fakeViewModel, navController = rememberNavController())
 }

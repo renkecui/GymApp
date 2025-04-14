@@ -103,7 +103,7 @@ fun PlanScreen(
 @Composable
 private fun PlanScreenPreview() {
     val highlightedDay = LocalDate.now()
-    val fakeViewModel = remember { FakeExerciseViewModel() }
+    val fakeViewModel = remember { com.example.gymapp.testing.FakeExerciseViewModel() }
 
     PlanScreen(
         navController = rememberNavController(),

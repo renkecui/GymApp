@@ -97,5 +97,5 @@ fun LogScreen(
 @Preview(showBackground = true)
 @Composable
 private fun LogScreenPreview() {
-    LogScreen(navController = rememberNavController(), viewModel = FakeExerciseViewModel())
+    LogScreen(navController = rememberNavController(), viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }

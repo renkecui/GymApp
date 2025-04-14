@@ -108,7 +108,7 @@ fun BodyPartExerciseList(
 fun BodyPartExerciseListPreview() {
     BodyPartExerciseList(
         bodyPart = "back",
-        viewModel = FakeExerciseViewModel(),
+        viewModel = com.example.gymapp.testing.FakeExerciseViewModel(),
         navController = rememberNavController()
     )
 }

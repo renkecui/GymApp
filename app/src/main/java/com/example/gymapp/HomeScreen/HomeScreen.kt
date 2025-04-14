@@ -113,5 +113,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController(), viewModel = FakeExerciseViewModel())
+    HomeScreen(navController = rememberNavController(), viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }

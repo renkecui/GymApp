@@ -320,5 +320,5 @@ fun LogExerciseItem(
 @Preview(showBackground = true)
 @Composable
 fun LogWorkoutPreview() {
-    LogWorkout(viewModel = FakeExerciseViewModel())
+    LogWorkout(viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }
