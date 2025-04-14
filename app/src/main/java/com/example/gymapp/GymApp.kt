@@ -83,6 +83,5 @@ fun GymApp() {
 @Preview(showBackground = true)
 @Composable
 private fun GymAppPreview() {
-    // Provide a fake navController for preview
     GymApp()
 }
