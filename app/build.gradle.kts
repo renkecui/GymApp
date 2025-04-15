@@ -86,6 +86,7 @@ dependencies {
     implementation("com.github.bumptech.glide:gifdecoder:4.16.0")           // ADDED for GIF
     implementation("androidx.compose.material3:material3-android:1.3.1")
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.runner)
     debugImplementation("androidx.fragment:fragment-testing:1.8.5")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.5")

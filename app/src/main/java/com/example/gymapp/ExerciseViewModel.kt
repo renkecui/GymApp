@@ -20,8 +20,8 @@ import kotlinx.coroutines.withContext
 open class ExerciseViewModel : ViewModel() {
     private val apiKey = ApiKey.apiKey
     private lateinit var database: AppDatabase
-    private lateinit var workoutLogDao: WorkoutLogDao
-    private lateinit var workoutNotesDao: WorkoutNotesDao
+    protected lateinit var workoutLogDao: WorkoutLogDao
+    protected lateinit var workoutNotesDao: WorkoutNotesDao
 
     protected val _exercises = MutableStateFlow<List<ExerciseDbItem>>(emptyList())
     val exercises: StateFlow<List<ExerciseDbItem>> = _exercises
@@ -73,20 +73,6 @@ open class ExerciseViewModel : ViewModel() {
         workoutNotesDao = database.workoutNotesDao()
     }
 
-    fun fetchExercises() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                val response = api.getAllExercises(apiKey = apiKey)
-                _exercises.value = response
-                _error.value = null
-            } catch (e: Exception) {
-                _error.value = e.message
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
 
     fun getBodyPartCategory() {
         viewModelScope.launch {
