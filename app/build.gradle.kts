@@ -74,6 +74,7 @@ dependencies {
     androidTestImplementation ("androidx.test.uiautomator:uiautomator:2.3.0")
     // Added Retrofit Logging
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0") // or latest
+    testImplementation ("io.mockk:mockk:1.12.0")
 
     // ADDED COIL
     implementation ("io.coil-kt:coil-compose:2.4.0")
@@ -95,6 +96,7 @@ dependencies {
     implementation("com.github.bumptech.glide:gifdecoder:4.16.0")           // ADDED for GIF
     implementation("androidx.compose.material3:material3-android:1.3.1")
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.runner)
     debugImplementation("androidx.fragment:fragment-testing:1.8.5")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.5")
