@@ -3,7 +3,6 @@ package com.example.gymapp.HomeScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -28,8 +27,6 @@ import com.example.gymapp.Components.Streaks
 import com.example.gymapp.Components.TodayWorkoutSummaryCard
 import com.example.gymapp.ExerciseViewModel
 import com.example.gymapp.R
-import com.example.gymapp.testing.FakeExerciseViewModel
-import java.time.LocalDate
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -88,8 +85,8 @@ fun HomeScreen(
 
         // 🦥 Sloth Level Image Based on Streak Weeks
         val slothImage = when {
-            streak < 21 -> R.drawable.level2 // 0–2 weeks
-            streak < 49 -> R.drawable.level1 // 3–6 weeks
+            streak < 21 -> R.drawable.level1 // 0–2 weeks
+            streak < 49 -> R.drawable.level2 // 3–6 weeks
             else -> R.drawable.level3        // 7+ weeks
         }
 
