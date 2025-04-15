@@ -32,7 +32,8 @@ android {
         }
 
         debug {
-
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
     }
     compileOptions {
@@ -63,8 +64,17 @@ kapt {
 }
 
 dependencies {
+    // Unit testing
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.robolectric:robolectric:4.10.3")
+
+    // UI testing
+    androidTestImplementation ("androidx.test:runner:1.5.2")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("androidx.test.uiautomator:uiautomator:2.3.0")
     // Added Retrofit Logging
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0") // or latest
+    testImplementation ("io.mockk:mockk:1.12.0")
 
     // ADDED COIL
     implementation ("io.coil-kt:coil-compose:2.4.0")

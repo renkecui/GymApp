@@ -1,4 +1,4 @@
-package com.example.gymapp.Components
+package com.example.gymapp.components
 
 import android.net.Uri
 import android.os.Build
@@ -27,8 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.ExerciseViewModel
-import com.example.gymapp.testing.ExampleData
-import com.example.gymapp.testing.FakeExerciseViewModel
 
 
 @Composable
@@ -89,8 +87,8 @@ fun ExerciseCategories(
 @Preview(showBackground = true)
 @Composable
 fun PreviewExerciseCategories() {
-    val testExerciseList = ExampleData.bodyPartList
-    val fakeViewModel = remember { FakeExerciseViewModel() }
+    val testExerciseList = com.example.gymapp.testing.ExampleData.bodyPartList
+    val fakeViewModel = remember { com.example.gymapp.testing.FakeExerciseViewModel() }
 
     ExerciseCategories(testExerciseList, fakeViewModel, navController = rememberNavController())
 }

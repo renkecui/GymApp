@@ -16,8 +16,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gymapp.Components.BodyPartExerciseList
-import com.example.gymapp.Components.BottomNavBar
+import com.example.gymapp.components.BodyPartExerciseList
+import com.example.gymapp.components.BottomNavBar
 import com.example.gymapp.HomeScreen.HomeScreen
 import com.example.gymapp.Log.LogScreen
 import com.example.gymapp.Plan.PlanScreen
@@ -59,10 +59,10 @@ fun GymApp() {
             startDestination = "home",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { HomeScreen(navController, viewModel) }
+            composable("home") { HomeScreen(viewModel) }
             composable("plan") { PlanScreen(navController, viewModel) }
-            composable("workout") { WorkoutScreen(navController, viewModel) }
-            composable("log") { LogScreen(navController, viewModel) }
+            composable("workout") { WorkoutScreen(viewModel) }
+            composable("log") { LogScreen(viewModel) }
 
 
             // nested route example
@@ -83,6 +83,5 @@ fun GymApp() {
 @Preview(showBackground = true)
 @Composable
 private fun GymAppPreview() {
-    // Provide a fake navController for preview
     GymApp()
 }

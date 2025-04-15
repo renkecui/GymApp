@@ -25,19 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.gymapp.Components.LogWorkout
-import com.example.gymapp.Components.WeekView
+import com.example.gymapp.components.LogWorkout
+import com.example.gymapp.components.WeekView
 import com.example.gymapp.ExerciseViewModel
-import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun LogScreen(
-    navController: NavHostController,
     viewModel: ExerciseViewModel
 ) {
     val currentDay by viewModel.currentDay.collectAsState()
@@ -97,5 +93,5 @@ fun LogScreen(
 @Preview(showBackground = true)
 @Composable
 private fun LogScreenPreview() {
-    LogScreen(navController = rememberNavController(), viewModel = FakeExerciseViewModel())
+    LogScreen(viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }

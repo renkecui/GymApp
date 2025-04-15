@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.DayOfWeek
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 open class ExerciseViewModel : ViewModel() {
@@ -50,6 +51,9 @@ open class ExerciseViewModel : ViewModel() {
     protected val _workoutNotes = MutableStateFlow<WorkoutNotes?>(null)
     val workoutNotes: StateFlow<WorkoutNotes?> = _workoutNotes
 
+    protected val _streak = MutableStateFlow(0)
+    val streak: StateFlow<Int> = _streak
+
     // Track Today's Date
     @RequiresApi(Build.VERSION_CODES.O)
     protected val _currentDay = MutableStateFlow(LocalDate.now())
@@ -63,7 +67,7 @@ open class ExerciseViewModel : ViewModel() {
     val dayDate: StateFlow<LocalDate> = _dayDate
 
     // Track exercises for specific dates
-    protected val _exercisesByDate = mutableMapOf<LocalDate, MutableList<ExerciseDbItem>>()
+    val _exercisesByDate = mutableMapOf<LocalDate, MutableList<ExerciseDbItem>>()
 
     private val api = RetrofitInstance.api
 
@@ -158,6 +162,11 @@ open class ExerciseViewModel : ViewModel() {
                     exercisesForDate.add(exercise)
                     _exercisesByDate[date] = exercisesForDate
                     
+                    // Clear any existing workout logs for this exercise on this date
+                    withContext(Dispatchers.IO) {
+                        workoutLogDao.deleteLog(date, exercise.id)
+                    }
+                    
                     // Update the UI state for the current day
                     if (date == _dayDate.value) {
                         _selectedExercises.value = exercisesForDate.toList()
@@ -165,6 +174,8 @@ open class ExerciseViewModel : ViewModel() {
                         val updatedCategories = _selectedCategories.value.toMutableSet()
                         updatedCategories.add(exercise.bodyPart)
                         _selectedCategories.value = updatedCategories
+                        // Reload workout logs to reflect the cleared logs
+                        loadWorkoutLogsForDate(date)
                     }
                 }
             } catch (e: Exception) {
@@ -208,6 +219,35 @@ open class ExerciseViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    open fun calculateStreak() {
+        viewModelScope.launch {
+            try {
+                val today = LocalDate.now()
+                var currentStreak = 0
+                var currentDate = today
+
+                while (true) {
+                    // Check if there are any planned exercises for this date
+                    val hasPlannedExercises = _exercisesByDate[currentDate]?.isNotEmpty() ?: false
+
+                    if (hasPlannedExercises) {
+                        currentStreak++
+                        currentDate = currentDate.minusDays(1)
+                    } else {
+                        break
+                    }
+                }
+
+                _streak.value = currentStreak
+                Log.d("ExerciseViewModel", "Current streak: $currentStreak")
+            } catch (e: Exception) {
+                _error.value = e.message
+                Log.e("ExerciseViewModel", "Error calculating streak: ${e.message}")
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     open fun saveWorkoutLog(exerciseId: String, reps: Int, weight: Float) {
         viewModelScope.launch {
             try {
@@ -235,6 +275,7 @@ open class ExerciseViewModel : ViewModel() {
                 
                 // Update the UI state
                 loadWorkoutLogsForDate(date)
+                calculateStreak() // Update streak after saving log
             } catch (e: Exception) {
                 _error.value = e.message
                 Log.e("Database", "Error saving workout log: ${e.message}")
@@ -275,6 +316,7 @@ open class ExerciseViewModel : ViewModel() {
                     workoutNotesDao.insertNotes(currentNotes)
                 }
                 _workoutNotes.value = currentNotes
+                calculateStreak() // Update streak after saving notes
                 Log.d("ExerciseViewModel", "Notes saved and state updated")
             } catch (e: Exception) {
                 _error.value = e.message
@@ -335,6 +377,7 @@ open class ExerciseViewModel : ViewModel() {
                 // Load workout logs and notes for the current day
                 loadWorkoutLogsForDate(_dayDate.value)
                 loadWorkoutNotesForDate(_dayDate.value)
+                calculateStreak() // Update streak when loading the workout list
                 
                 _error.value = null
             } catch (e: Exception) {
