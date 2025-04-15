@@ -19,22 +19,16 @@
 //    @get:Rule
 //    val rule = createComposeRule()
 //
-//    @Before
-//    fun setup() {
+//    @Test
+//    fun streaks_displayWeekLabel() {
 //        rule.setContent {
 //            MaterialTheme {
 //                Streaks(highlightedDay = DayOfWeek.MONDAY)
 //            }
 //        }
-//    }
-//
-//    @Test
-//    fun streaks_displayWeekLabel() {
 //        // Verify that the "Week 1" text is displayed on the screen.
-////        rule.onNodeWithText("Week 1").assertExists()
+//        rule.onNodeWithText("Week 1").assertExists()
 ////        rule.onNodeWithText("Week 1").assertIsDisplayed()
 ////        rule.onNodeWithText("Error").assertIsNotDisplayed()
-//
 //    }
-//
 //}
