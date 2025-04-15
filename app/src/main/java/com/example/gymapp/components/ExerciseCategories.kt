@@ -1,4 +1,4 @@
-package com.example.gymapp.Components
+package com.example.gymapp.components
 
 import android.net.Uri
 import android.os.Build
@@ -27,8 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.ExerciseViewModel
-import com.example.gymapp.testing.ExampleData
-import com.example.gymapp.testing.FakeExerciseViewModel
 
 
 @Composable

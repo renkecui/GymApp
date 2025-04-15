@@ -8,7 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.example.gymapp.Components.NewStreak
+import com.example.gymapp.components.NewStreak
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -21,10 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.draw.clip
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.gymapp.Components.Streaks
-import com.example.gymapp.Components.TodayWorkoutSummaryCard
+import com.example.gymapp.components.Streaks
+import com.example.gymapp.components.TodayWorkoutSummaryCard
 import com.example.gymapp.ExerciseViewModel
 import com.example.gymapp.R
 import java.util.Locale

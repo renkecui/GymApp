@@ -16,8 +16,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.gymapp.Components.BodyPartExerciseList
-import com.example.gymapp.Components.BottomNavBar
+import com.example.gymapp.components.BodyPartExerciseList
+import com.example.gymapp.components.BottomNavBar
 import com.example.gymapp.HomeScreen.HomeScreen
 import com.example.gymapp.Log.LogScreen
 import com.example.gymapp.Plan.PlanScreen

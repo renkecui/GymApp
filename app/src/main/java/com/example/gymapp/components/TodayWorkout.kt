@@ -1,4 +1,4 @@
-package com.example.gymapp.Components
+package com.example.gymapp.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gymapp.ExerciseViewModel
 import com.example.gymapp.data.ExerciseDbItem
-import com.example.gymapp.testing.FakeExerciseViewModel
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
