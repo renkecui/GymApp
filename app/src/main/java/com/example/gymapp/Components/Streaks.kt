@@ -21,7 +21,7 @@ import java.time.DayOfWeek
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Streaks(count: Int, highlightedDay: DayOfWeek) {
+fun Streaks(highlightedDay: DayOfWeek) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -54,25 +54,22 @@ fun Streaks(count: Int, highlightedDay: DayOfWeek) {
 @Preview
 @Composable
 private fun StreaksPreviewM5() {
-    val count: Int = 5
     val dayOfWeek = DayOfWeek.MONDAY
-    Streaks(count, dayOfWeek)
+    Streaks(dayOfWeek)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun StreaksPreviewT12() {
-    val count: Int = 12
     val dayOfWeek = DayOfWeek.TUESDAY
-    Streaks(count, dayOfWeek)
+    Streaks(dayOfWeek)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun StreaksPreviewS182() {
-    val count: Int = 182
     val dayOfWeek = DayOfWeek.SATURDAY
-    Streaks(count, dayOfWeek)
+    Streaks(dayOfWeek)
 }

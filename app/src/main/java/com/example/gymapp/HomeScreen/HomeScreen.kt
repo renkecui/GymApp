@@ -32,7 +32,6 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
-    navController: NavController,
     viewModel: ExerciseViewModel
 ) {
     val streak by viewModel.streak.collectAsState()
@@ -71,7 +70,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Week Label
-        Streaks(streak, highlightedDay)
+        Streaks(highlightedDay)
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "Today's Workout", style = MaterialTheme.typography.bodyLarge)
@@ -110,5 +109,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController(), viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
+    HomeScreen(viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }

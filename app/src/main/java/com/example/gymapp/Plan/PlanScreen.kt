@@ -45,9 +45,6 @@ fun PlanScreen(
     viewModel: ExerciseViewModel
 ) {
     val exerciseCategories by viewModel.categories.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val error by viewModel.error.collectAsState()
-    val currentDay by viewModel.currentDay.collectAsState()
     val dayDate by viewModel.dayDate.collectAsState()
     val highlightedDay = dayDate.dayOfWeek
     val formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d")
@@ -102,7 +99,6 @@ fun PlanScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PlanScreenPreview() {
-    val highlightedDay = LocalDate.now()
     val fakeViewModel = remember { com.example.gymapp.testing.FakeExerciseViewModel() }
 
     PlanScreen(

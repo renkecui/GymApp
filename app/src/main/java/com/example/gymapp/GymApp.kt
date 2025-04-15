@@ -59,10 +59,10 @@ fun GymApp() {
             startDestination = "home",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { HomeScreen(navController, viewModel) }
+            composable("home") { HomeScreen(viewModel) }
             composable("plan") { PlanScreen(navController, viewModel) }
-            composable("workout") { WorkoutScreen(navController, viewModel) }
-            composable("log") { LogScreen(navController, viewModel) }
+            composable("workout") { WorkoutScreen(viewModel) }
+            composable("log") { LogScreen(viewModel) }
 
 
             // nested route example

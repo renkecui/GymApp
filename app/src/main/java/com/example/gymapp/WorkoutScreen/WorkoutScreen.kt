@@ -39,7 +39,6 @@ import java.time.DayOfWeek
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WorkoutScreen(
-    navController: NavHostController,
     viewModel: ExerciseViewModel
 ) {
     val currentDay by viewModel.currentDay.collectAsState()
@@ -98,7 +97,6 @@ fun WorkoutScreen(
 @Composable
 private fun WorkoutScreenPreview() {
     WorkoutScreen(
-        navController = rememberNavController(),
         viewModel = com.example.gymapp.testing.FakeExerciseViewModel()
     )
 }

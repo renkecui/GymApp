@@ -1,6 +1,7 @@
 package com.example.gymapp.Components
 
-import androidx.compose.foundation.background
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.DayOfWeek
 
 @Composable
 fun NewStreak(streakCount: Int) {
@@ -62,4 +64,12 @@ fun NewStreak(streakCount: Int) {
             }
         }
     }
+}
+
+
+@Preview
+@Composable
+private fun StreaksPreview5() {
+    val count: Int = 5
+    NewStreak(count)
 }

@@ -37,7 +37,6 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun LogScreen(
-    navController: NavHostController,
     viewModel: ExerciseViewModel
 ) {
     val currentDay by viewModel.currentDay.collectAsState()
@@ -97,5 +96,5 @@ fun LogScreen(
 @Preview(showBackground = true)
 @Composable
 private fun LogScreenPreview() {
-    LogScreen(navController = rememberNavController(), viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
+    LogScreen(viewModel = com.example.gymapp.testing.FakeExerciseViewModel())
 }
