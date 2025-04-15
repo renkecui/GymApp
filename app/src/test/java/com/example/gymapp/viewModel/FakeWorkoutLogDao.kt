@@ -1,4 +1,4 @@
-package com.example.gymapp.testing
+package com.example.gymapp.viewModel
 
 import com.example.gymapp.data.WorkoutLog
 import com.example.gymapp.data.WorkoutLogDao
@@ -26,5 +26,9 @@ class FakeWorkoutLogDao : WorkoutLogDao {
     }
     override suspend fun deleteLog(date: LocalDate, exerciseId: String) {
         logs.removeAll { it.date == date && it.exerciseId == exerciseId }
+    }
+    fun clear() {
+        logs.clear()
+
     }
 }
