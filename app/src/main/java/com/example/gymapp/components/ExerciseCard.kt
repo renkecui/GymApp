@@ -1,4 +1,4 @@
-package com.example.gymapp.Components
+package com.example.gymapp.components
 
 
 import androidx.compose.foundation.background
@@ -23,7 +23,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.draw.clip
 import com.example.gymapp.data.ExerciseDbItem
-import com.example.gymapp.testing.ExampleData
 
 @Composable
 fun ExerciseItemCard(
@@ -66,7 +65,7 @@ fun ExerciseItemCard(
 @Preview
 @Composable
 fun PreviewExerciseCardPushUp() {
-    val exampleExercise = ExampleData.backExercise
+    val exampleExercise = com.example.gymapp.testing.ExampleData.backExercise
     val isSelected = false
 
     ExerciseItemCard(exampleExercise,isSelected, onToggleSelect = {})

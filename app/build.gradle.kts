@@ -32,7 +32,8 @@ android {
         }
 
         debug {
-
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
     }
     compileOptions {
@@ -63,8 +64,17 @@ kapt {
 }
 
 dependencies {
+    // Unit testing
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.robolectric:robolectric:4.10.3")
+
+    // UI testing
+    androidTestImplementation ("androidx.test:runner:1.5.2")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("androidx.test.uiautomator:uiautomator:2.3.0")
     // Added Retrofit Logging
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0") // or latest
+    testImplementation ("io.mockk:mockk:1.12.0")
 
     // ADDED COIL
     implementation ("io.coil-kt:coil-compose:2.4.0")
@@ -86,6 +96,7 @@ dependencies {
     implementation("com.github.bumptech.glide:gifdecoder:4.16.0")           // ADDED for GIF
     implementation("androidx.compose.material3:material3-android:1.3.1")
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.runner)
     debugImplementation("androidx.fragment:fragment-testing:1.8.5")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.5")
@@ -125,6 +136,8 @@ dependencies {
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
 
     // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:$room_version")

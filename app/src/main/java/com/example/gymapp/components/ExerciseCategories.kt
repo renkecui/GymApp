@@ -1,4 +1,4 @@
-package com.example.gymapp.Components
+package com.example.gymapp.components
 
 import android.net.Uri
 import android.os.Build
@@ -27,8 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gymapp.ExerciseViewModel
-import com.example.gymapp.testing.ExampleData
-import com.example.gymapp.testing.FakeExerciseViewModel
 
 
 @Composable
@@ -38,6 +36,7 @@ fun ExerciseCategories(
     navController: NavHostController
 ) {
     viewModel.getBodyPartCategory()
+    val selectedCategories by viewModel.selectedCategories.collectAsState()
 
     Spacer(modifier = Modifier.height(8.dp))
     Box(
@@ -59,13 +58,13 @@ fun ExerciseCategories(
         contentPadding = PaddingValues(bottom = 100.dp)
     ) {
         items(exerciseDbList) { exerciseBodyPart ->
-
+            val isSelected = exerciseBodyPart != null && selectedCategories.contains(exerciseBodyPart)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color.LightGray)
+                    .background(if (isSelected) Color(0xFFA5D6A7) else Color.LightGray)
                     .clickable {
                         exerciseBodyPart?.let { bodyPart ->
                             val encodedPart = Uri.encode(bodyPart)
@@ -88,8 +87,8 @@ fun ExerciseCategories(
 @Preview(showBackground = true)
 @Composable
 fun PreviewExerciseCategories() {
-    val testExerciseList = ExampleData.bodyPartList
-    val fakeViewModel = remember { FakeExerciseViewModel() }
+    val testExerciseList = com.example.gymapp.testing.ExampleData.bodyPartList
+    val fakeViewModel = remember { com.example.gymapp.testing.FakeExerciseViewModel() }
 
     ExerciseCategories(testExerciseList, fakeViewModel, navController = rememberNavController())
 }

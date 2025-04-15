@@ -1,4 +1,4 @@
-package com.example.gymapp.Components
+package com.example.gymapp.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -9,16 +9,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsRun
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.DirectionsRun
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.automirrored.filled.DirectionsRun
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.ui.text.font.FontWeight
