@@ -1,9 +1,10 @@
+package com.example.gymapp.viewModel
+
 import androidx.room.Dao
 import com.example.gymapp.data.WorkoutNotes
 import com.example.gymapp.data.WorkoutNotesDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 @Dao
@@ -48,5 +49,6 @@ class FakeWorkoutNotesDao : WorkoutNotesDao {
     fun clear() {
         notesList.clear()
         notesFlow.value = emptyList()
+
     }
 }

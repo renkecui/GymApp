@@ -2,11 +2,11 @@ package com.example.gymapp.data
 
 // ExerciseDB
 data class ExerciseDbItem(
-    val bodyPart: String,
+    open val bodyPart: String,
     val equipment: String,
     val gifUrl: String,
-    val id: String,
-    val name: String,
+    open val id: String,
+    open val name: String,
     val target: String,
     val secondaryMuscles: List<String>,
     val instructions: List<String>

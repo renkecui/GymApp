@@ -6,7 +6,7 @@
 //import androidx.compose.ui.test.junit4.createComposeRule
 //import androidx.compose.ui.test.onNodeWithText
 //import androidx.test.ext.junit.runners.AndroidJUnit4
-//import com.example.gymapp.Components.Streaks
+//import com.example.gymapp.components.Streaks
 //import org.junit.Before
 //import org.junit.Rule
 //import org.junit.Test

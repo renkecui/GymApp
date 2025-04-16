@@ -21,8 +21,8 @@ import kotlinx.coroutines.withContext
 open class ExerciseViewModel : ViewModel() {
     private val apiKey = ApiKey.apiKey
     private lateinit var database: AppDatabase
-    protected lateinit var workoutLogDao: WorkoutLogDao
-    protected lateinit var workoutNotesDao: WorkoutNotesDao
+    internal lateinit var workoutLogDao: WorkoutLogDao
+    internal lateinit var workoutNotesDao: WorkoutNotesDao
 
     protected val _exercises = MutableStateFlow<List<ExerciseDbItem>>(emptyList())
     val exercises: StateFlow<List<ExerciseDbItem>> = _exercises
@@ -48,7 +48,7 @@ open class ExerciseViewModel : ViewModel() {
     protected val _workoutLogs = MutableStateFlow<Map<String, WorkoutLog>>(emptyMap())
     val workoutLogs: StateFlow<Map<String, WorkoutLog>> = _workoutLogs
 
-    protected val _workoutNotes = MutableStateFlow<WorkoutNotes?>(null)
+    val _workoutNotes = MutableStateFlow<WorkoutNotes?>(null)
     val workoutNotes: StateFlow<WorkoutNotes?> = _workoutNotes
 
     protected val _streak = MutableStateFlow(0)
@@ -56,13 +56,13 @@ open class ExerciseViewModel : ViewModel() {
 
     // Track Today's Date
     @RequiresApi(Build.VERSION_CODES.O)
-    protected val _currentDay = MutableStateFlow(LocalDate.now())
+    internal val _currentDay = MutableStateFlow(LocalDate.now())
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDay: StateFlow<LocalDate> = _currentDay
 
     // Track the day being viewed
     @RequiresApi(Build.VERSION_CODES.O)
-    protected val _dayDate = MutableStateFlow(LocalDate.now())
+    internal val _dayDate = MutableStateFlow(LocalDate.now())
     @RequiresApi(Build.VERSION_CODES.O)
     val dayDate: StateFlow<LocalDate> = _dayDate
 
