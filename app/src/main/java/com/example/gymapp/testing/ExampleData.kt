@@ -76,6 +76,21 @@ object ExampleData {
         )
     )
 
+    val legExerciseDbItem = ExerciseDbItem(
+        bodyPart = "legs",
+        equipment = "barbell",
+        gifUrl = "https://example.com/gifs/barbell-squat.gif",
+        id = "0010",
+        name = "Barbell Squat",
+        target = "quadriceps",
+        secondaryMuscles = listOf("glutes", "hamstrings", "lower back"),
+        instructions = listOf(
+            "Stand with your feet shoulder-width apart.",
+            "Lower your body by bending your knees.",
+            "Push through your heels to stand back up."
+        )
+    )
+
 
     val exerciseList = listOf(
         ExerciseDbItem(

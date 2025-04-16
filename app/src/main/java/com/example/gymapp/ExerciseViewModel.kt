@@ -48,7 +48,7 @@ open class ExerciseViewModel : ViewModel() {
     protected val _workoutLogs = MutableStateFlow<Map<String, WorkoutLog>>(emptyMap())
     val workoutLogs: StateFlow<Map<String, WorkoutLog>> = _workoutLogs
 
-    protected val _workoutNotes = MutableStateFlow<WorkoutNotes?>(null)
+    val _workoutNotes = MutableStateFlow<WorkoutNotes?>(null)
     val workoutNotes: StateFlow<WorkoutNotes?> = _workoutNotes
 
     protected val _streak = MutableStateFlow(0)
